@@ -1,0 +1,22 @@
+services:
+    server:
+        build: ./server
+        ports:
+            - '3001:3001'
+        environment:
+            - PORT=3001
+            - NODE_ENV=development
+            - OPENAI_API_KEY=${OPENAI_API_KEY}
+            - GENAI_PROVIDER=${GENAI_PROVIDER:-openai}
+            - GENAI_TIMEOUT=${GENAI_TIMEOUT:-30000}
+            - GENAI_MAX_RETRIES=${GENAI_MAX_RETRIES:-2}
+            - OUTPUT_DIR=outputs
+        volumes:
+            - ./server/outputs:/app/outputs
+
+    client:
+        build: ./client
+        ports:
+            - '5173:5173'
+        depends_on:
+            - server
