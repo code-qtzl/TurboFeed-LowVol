@@ -107,10 +107,10 @@ Client runs on **http://localhost:5173**
 
 ```json
 {
-	"products": ["Product A", "Product B"],
+	"products": ["Mommas House"],
 	"targetRegion": "North America",
-	"targetAudience": "Fitness enthusiasts aged 18-45",
-	"campaignMessage": "Push your limits"
+	"targetAudience": "Mothers",
+	"campaignMessage": "Luxury Living"
 }
 ```
 
