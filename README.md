@@ -2,6 +2,13 @@
 
 Creative automation pipeline that generates social ad campaign assets from a brief. Upload product images (or let AI generate them), and the system produces creatives across multiple aspect ratios with campaign messaging overlaid.
 
+> [!IMPORTANT]
+> **News: This project is cooking**
+> \
+> Status: **Active Development**
+> \
+> This project is currently "cooking" and evolving rapidly. Expect frequent breaking changes and updates. If you encounter a bug or have a feature request, please open an issue. If you'd like to help build this, forks and pull requests are highly encouraged! Check out how to [CONTRIBUTE](CONTRIBUTING).
+
 ## Quick Start (Docker)
 
 ### Prerequisites
