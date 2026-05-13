@@ -129,3 +129,9 @@ cd client && npm test        # Client component tests
 - **Organized outputs** — Each campaign gets a folder: `outputs/{id}/{product}/{ratio}/creative.jpg`
 
 See [server/README.md](server/README.md) and [client/README.md](client/README.md) for detailed docs.
+
+--
+
+## License
+
+[MIT License](LICENSE)
