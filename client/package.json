@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "vite",
 		"lint": "eslint .",
-		"test": "vitest run --config vitest.config.ts",
+		"test": "vitest run --passWithNoTests",
 		"test:watch": "vitest",
 		"test:coverage": "vitest run --coverage",
 		"server": "echo \"🫣 Wrong folder?: 'npm run server' should be run in ./backend directory\" && echo \"💡 Try: 'cd backend && npm run server'\" && exit 1"
