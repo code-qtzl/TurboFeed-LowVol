@@ -59,6 +59,7 @@ describe('VideoGenerator', () => {
 				return `https://fal.test/upload-${uploadCounter}.jpg`;
 			}),
 			constructPrompt: jest.fn().mockReturnValue('video prompt'),
+			buildInput: jest.fn().mockReturnValue({}),
 			submitVideo: jest.fn().mockImplementation(async () => {
 				requestCounter += 1;
 				return `request-${requestCounter}`;
@@ -68,15 +69,16 @@ describe('VideoGenerator', () => {
 				.fn()
 				.mockResolvedValue({ videoUrl: 'https://fal.test/video.mp4' }),
 			downloadVideo: jest.fn().mockResolvedValue(Buffer.from('mp4-data')),
-		};
+		} as unknown as jest.Mocked<FalVideoService>;
 		imageRelightingService = {
+			loadVibePrompt: jest.fn().mockResolvedValue('vibe prompt'),
 			relight: jest
 				.fn()
 				.mockImplementation(async ({ lightingPreset }) => ({
 					imageBuffer: Buffer.from(`relit-${lightingPreset}`),
 					prompt: `vibe-${lightingPreset}`,
 				})),
-		};
+		} as unknown as jest.Mocked<ImageRelightingService>;
 		normalizeVideo = jest.fn().mockImplementation(async (buffer) => buffer);
 		generator = new VideoGenerator(
 			campaignManager,

@@ -104,9 +104,9 @@ export class FalVideoService {
 	}
 
 	async getResult(requestId: string): Promise<FalVideoResult> {
-		const result = await fal.queue.result<{
-			data?: { video?: { url?: string }; video_url?: string };
-		}>(this.endpointId as Parameters<typeof fal.queue.result>[0], {
+		// fal.queue.result requires EndpointType generic; cast through any to extract the response shape we need
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const result = await fal.queue.result<any>(this.endpointId as any, {
 			requestId,
 		});
 		const videoUrl = result.data?.video?.url || result.data?.video_url;

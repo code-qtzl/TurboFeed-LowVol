@@ -94,7 +94,7 @@ jobs:
                   persist-credentials: false
 
             - name: Dependency Review
-              uses: actions/dependency-review-action@da6e9538c2c3b65e5024c4f6d22b18c0b72c4785 # v4.7.1
+              uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
 
     client:
         name: Client (React + Vite)
