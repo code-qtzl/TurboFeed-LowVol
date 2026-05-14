@@ -4,8 +4,11 @@ import { CampaignManager } from './campaign-manager';
 import { AssetManager } from './asset-manager';
 import { GenAIService } from './genai-service';
 import { resizeImage, overlayText, ASPECT_RATIOS } from './image-processor';
-import { CampaignOutput, Asset } from './types';
+import { CampaignOutput } from './types';
 import { config } from './config';
+
+/** CampaignOutput with an in-memory buffer attached before file persistence */
+export type OutputWithBuffer = CampaignOutput & { buffer: Buffer };
 
 /**
  * Request to trigger creative generation for a campaign
@@ -20,7 +23,7 @@ export interface GenerationRequest {
  */
 export interface GenerationResult {
 	campaignId: string;
-	outputs: CampaignOutput[];
+	outputs: OutputWithBuffer[];
 	generatedAt: Date;
 	errors?: string[];
 }
@@ -144,7 +147,7 @@ export class CreativeGenerator {
 	async generate(request: GenerationRequest): Promise<GenerationResult> {
 		const { campaignId } = request;
 		const errors: string[] = [];
-		const outputs: CampaignOutput[] = [];
+		const outputs: OutputWithBuffer[] = [];
 		const buffers = new Map<string, Buffer>();
 
 		// Retrieve the campaign
@@ -206,15 +209,15 @@ export class CreativeGenerator {
 						campaignMessage,
 					);
 
-					const output: CampaignOutput = {
+					const output: OutputWithBuffer = {
 						kind: 'image',
 						hero,
 						aspectRatio: aspectRatio.ratio,
 						filePath: '',
 						generatedAt: new Date(),
+						buffer: processedBuffer,
 					};
 
-					(output as any).buffer = processedBuffer;
 					buffers.set(
 						`${hero}|${aspectRatio.ratio}`,
 						processedBuffer,

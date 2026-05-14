@@ -3,7 +3,11 @@ import { CampaignManager } from '../../campaign-manager';
 import { AssetManager } from '../../asset-manager';
 import { VideoGenerator } from '../../video-generator';
 import { ASPECT_RATIOS } from '../../image-processor';
-import { VIDEO_LIGHTING_PRESETS } from '../../fal-video-service';
+import {
+	VIDEO_LIGHTING_PRESETS,
+	FalVideoService,
+} from '../../fal-video-service';
+import { ImageRelightingService } from '../../image-relighting-service';
 
 jest.mock('fs', () => {
 	const actual = jest.requireActual('fs');
@@ -24,8 +28,8 @@ describe('VideoGenerator', () => {
 	let testImageBuffer: Buffer;
 	let requestCounter: number;
 	let uploadCounter: number;
-	let falVideoService: any;
-	let imageRelightingService: any;
+	let falVideoService: jest.Mocked<FalVideoService>;
+	let imageRelightingService: jest.Mocked<ImageRelightingService>;
 	let normalizeVideo: jest.Mock;
 	let generator: VideoGenerator;
 
@@ -66,10 +70,12 @@ describe('VideoGenerator', () => {
 			downloadVideo: jest.fn().mockResolvedValue(Buffer.from('mp4-data')),
 		};
 		imageRelightingService = {
-			relight: jest.fn().mockImplementation(async ({ lightingPreset }) => ({
-				imageBuffer: Buffer.from(`relit-${lightingPreset}`),
-				prompt: `vibe-${lightingPreset}`,
-			})),
+			relight: jest
+				.fn()
+				.mockImplementation(async ({ lightingPreset }) => ({
+					imageBuffer: Buffer.from(`relit-${lightingPreset}`),
+					prompt: `vibe-${lightingPreset}`,
+				})),
 		};
 		normalizeVideo = jest.fn().mockImplementation(async (buffer) => buffer);
 		generator = new VideoGenerator(

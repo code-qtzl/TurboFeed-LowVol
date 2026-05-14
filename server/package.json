@@ -4,6 +4,7 @@
 	"scripts": {
 		"server": "ts-node src/server.ts",
 		"dev": "echo \"🫣 Wrong folder?: 'npm run dev' should be run in ./client directory\" && echo \"💡 Try: 'cd client && npm run dev'\" && exit 1",
+		"lint": "eslint src",
 		"test": "jest",
 		"test:watch": "jest --watch",
 		"test:coverage": "jest --coverage"
@@ -24,6 +25,10 @@
 		"@types/jest": "^30.0.0",
 		"@types/multer": "^2.1.0",
 		"@types/sharp": "^0.31.1",
+		"@eslint/js": "^9.36.0",
+		"eslint": "^9.36.0",
+		"globals": "^16.4.0",
+		"typescript-eslint": "^8.45.0",
 		"fast-check": "^4.6.0",
 		"jest": "^30.3.0",
 		"ts-jest": "^29.4.6",

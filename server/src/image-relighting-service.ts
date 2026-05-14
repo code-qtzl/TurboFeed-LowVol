@@ -66,11 +66,21 @@ export class ImageRelightingService {
 			},
 		});
 
-		const data = (result as any).data ?? result;
+		const data =
+			(
+				result as {
+					data?: {
+						images?: Array<{ url?: string }>;
+						image?: { url?: string };
+					};
+				}
+			).data ?? result;
 		const editedUrl: string | undefined =
 			data?.images?.[0]?.url ?? data?.image?.url;
 		if (!editedUrl || typeof editedUrl !== 'string') {
-			throw new Error('Image relighting result did not include an image URL');
+			throw new Error(
+				'Image relighting result did not include an image URL',
+			);
 		}
 
 		const response = await axios.get<ArrayBuffer>(editedUrl, {
