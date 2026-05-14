@@ -67,7 +67,7 @@ export interface ErrorResponse {
 	error: {
 		code: ErrorCode;
 		message: string;
-		details?: Record<string, any>;
+		details?: Record<string, unknown>;
 		timestamp: string;
 	};
 }

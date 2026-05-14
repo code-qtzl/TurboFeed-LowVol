@@ -1,11 +1,7 @@
 import sharp from 'sharp';
 import { CampaignManager } from '../../campaign-manager';
 import { AssetManager } from '../../asset-manager';
-import {
-	CreativeGenerator,
-	GenerationRequest,
-	GenerationResult,
-} from '../../creative-generator';
+import { CreativeGenerator, OutputWithBuffer } from '../../creative-generator';
 import { ASPECT_RATIOS } from '../../image-processor';
 import { Campaign, CampaignBrief, Asset } from '../../types';
 
@@ -189,9 +185,9 @@ describe('CreativeGenerator', () => {
 				campaignId: campaign.id,
 			});
 
-			for (const output of result.outputs) {
-				expect((output as any).buffer).toBeInstanceOf(Buffer);
-				expect((output as any).buffer.length).toBeGreaterThan(0);
+			for (const output of result.outputs as OutputWithBuffer[]) {
+				expect(output.buffer).toBeInstanceOf(Buffer);
+				expect(output.buffer.length).toBeGreaterThan(0);
 			}
 		});
 	});

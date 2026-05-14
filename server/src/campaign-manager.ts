@@ -12,7 +12,9 @@ const campaigns: Map<string, Campaign> = new Map();
 /**
  * Validates a campaign brief against requirements
  */
-export function validateCampaignBrief(brief: any): ValidationResult {
+export function validateCampaignBrief(
+	brief: Record<string, unknown>,
+): ValidationResult {
 	const errors: string[] = [];
 
 	if (typeof brief.hero !== 'string') {

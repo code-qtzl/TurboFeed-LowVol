@@ -104,6 +104,8 @@ export class FalVideoService {
 	}
 
 	async getResult(requestId: string): Promise<FalVideoResult> {
+		// fal.queue.result requires EndpointType generic; cast through any to extract the response shape we need
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const result = await fal.queue.result<any>(this.endpointId as any, {
 			requestId,
 		});

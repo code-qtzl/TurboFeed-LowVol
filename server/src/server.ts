@@ -53,7 +53,7 @@ const videoGenerator = new VideoGenerator(
 
 // --- Legacy message board endpoints ---
 
-let messages: Message[] = [];
+const messages: Message[] = [];
 let nextId = 1;
 
 app.get('/messages', (req, res) => {
@@ -83,7 +83,7 @@ app.post('/messages', (req, res) => {
 function errorResponse(
 	code: ErrorResponse['error']['code'],
 	message: string,
-	details?: Record<string, any>,
+	details?: Record<string, unknown>,
 ): ErrorResponse {
 	return {
 		error: {
@@ -207,7 +207,8 @@ app.post(
 			);
 
 			// Return asset without the raw buffer
-			const { buffer, ...assetResponse } = asset;
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const { buffer: _buffer, ...assetResponse } = asset;
 			res.status(201).json(assetResponse);
 		} catch (error) {
 			const msg =

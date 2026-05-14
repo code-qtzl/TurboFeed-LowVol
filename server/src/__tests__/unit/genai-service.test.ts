@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GenAIService, GenAIRequest, GenAIResponse } from '../../genai-service';
+import { GenAIService, GenAIRequest } from '../../genai-service';
 import { CampaignBrief } from '../../types';
 import { config } from '../../config';
 

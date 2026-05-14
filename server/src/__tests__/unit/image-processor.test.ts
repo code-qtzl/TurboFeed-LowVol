@@ -4,7 +4,6 @@ import {
 	createTextOverlaySVG,
 	overlayText,
 	ASPECT_RATIOS,
-	AspectRatioConfig,
 } from '../../image-processor';
 
 describe('Image Processor', () => {

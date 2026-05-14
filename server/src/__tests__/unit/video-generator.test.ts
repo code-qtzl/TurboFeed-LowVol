@@ -3,7 +3,11 @@ import { CampaignManager } from '../../campaign-manager';
 import { AssetManager } from '../../asset-manager';
 import { VideoGenerator } from '../../video-generator';
 import { ASPECT_RATIOS } from '../../image-processor';
-import { VIDEO_LIGHTING_PRESETS } from '../../fal-video-service';
+import {
+	VIDEO_LIGHTING_PRESETS,
+	FalVideoService,
+} from '../../fal-video-service';
+import { ImageRelightingService } from '../../image-relighting-service';
 
 jest.mock('fs', () => {
 	const actual = jest.requireActual('fs');
@@ -24,8 +28,8 @@ describe('VideoGenerator', () => {
 	let testImageBuffer: Buffer;
 	let requestCounter: number;
 	let uploadCounter: number;
-	let falVideoService: any;
-	let imageRelightingService: any;
+	let falVideoService: jest.Mocked<FalVideoService>;
+	let imageRelightingService: jest.Mocked<ImageRelightingService>;
 	let normalizeVideo: jest.Mock;
 	let generator: VideoGenerator;
 
@@ -55,6 +59,7 @@ describe('VideoGenerator', () => {
 				return `https://fal.test/upload-${uploadCounter}.jpg`;
 			}),
 			constructPrompt: jest.fn().mockReturnValue('video prompt'),
+			buildInput: jest.fn().mockReturnValue({}),
 			submitVideo: jest.fn().mockImplementation(async () => {
 				requestCounter += 1;
 				return `request-${requestCounter}`;
@@ -64,13 +69,16 @@ describe('VideoGenerator', () => {
 				.fn()
 				.mockResolvedValue({ videoUrl: 'https://fal.test/video.mp4' }),
 			downloadVideo: jest.fn().mockResolvedValue(Buffer.from('mp4-data')),
-		};
+		} as unknown as jest.Mocked<FalVideoService>;
 		imageRelightingService = {
-			relight: jest.fn().mockImplementation(async ({ lightingPreset }) => ({
-				imageBuffer: Buffer.from(`relit-${lightingPreset}`),
-				prompt: `vibe-${lightingPreset}`,
-			})),
-		};
+			loadVibePrompt: jest.fn().mockResolvedValue('vibe prompt'),
+			relight: jest
+				.fn()
+				.mockImplementation(async ({ lightingPreset }) => ({
+					imageBuffer: Buffer.from(`relit-${lightingPreset}`),
+					prompt: `vibe-${lightingPreset}`,
+				})),
+		} as unknown as jest.Mocked<ImageRelightingService>;
 		normalizeVideo = jest.fn().mockImplementation(async (buffer) => buffer);
 		generator = new VideoGenerator(
 			campaignManager,

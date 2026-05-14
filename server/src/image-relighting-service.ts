@@ -66,11 +66,15 @@ export class ImageRelightingService {
 			},
 		});
 
+		// fal.subscribe returns Result<any>; cast to access the dynamic response shape
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const data = (result as any).data ?? result;
 		const editedUrl: string | undefined =
 			data?.images?.[0]?.url ?? data?.image?.url;
 		if (!editedUrl || typeof editedUrl !== 'string') {
-			throw new Error('Image relighting result did not include an image URL');
+			throw new Error(
+				'Image relighting result did not include an image URL',
+			);
 		}
 
 		const response = await axios.get<ArrayBuffer>(editedUrl, {
