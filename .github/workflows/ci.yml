@@ -52,6 +52,26 @@ jobs:
                       ci:
                         - ".github/**"
 
+    # Enforce branch naming convention: feat/, fix/, chore/, hotfix/, or agents/
+    validate-branch:
+        if: github.event_name == 'pull_request'
+        runs-on: ubuntu-latest
+        steps:
+            - name: Harden Runner
+              uses: step-security/harden-runner@f808768d1510423e83855289c910610ca9b43176 # v2.17.0
+              with:
+                  egress-policy: audit
+
+            - name: Check branch name
+              run: |
+                  branch="${{ github.head_ref }}"
+                  if [[ ! "$branch" =~ ^(feat|fix|chore|hotfix|agents)/ ]]; then
+                    echo "❌ Branch '$branch' does not follow the naming convention."
+                    echo "   Required prefix: feat/, fix/, chore/, hotfix/, or agents/"
+                    exit 1
+                  fi
+                  echo "✅ Branch '$branch' follows the naming convention."
+
     # Enforce Conventional Commits PR title format (e.g. "feat: add login page")
     validate-pr:
         if: github.event_name == 'pull_request'
@@ -139,8 +159,16 @@ jobs:
             - name: Lint
               run: npm run lint
 
-            - name: Test
-              run: npm test
+            - name: Test with coverage
+              run: npm run test:coverage
+
+            - name: Upload coverage report
+              uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
+              if: always()
+              with:
+                  name: coverage-client
+                  path: client/coverage/
+                  retention-days: 7
 
             - name: Build
               run: npx vite build
@@ -188,5 +216,13 @@ jobs:
             - name: Lint
               run: npm run lint
 
-            - name: Test
-              run: npm test
+            - name: Test with coverage
+              run: npm run test:coverage
+
+            - name: Upload coverage report
+              uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
+              if: always()
+              with:
+                  name: coverage-server
+                  path: server/coverage/
+                  retention-days: 7

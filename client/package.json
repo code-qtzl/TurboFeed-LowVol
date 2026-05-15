@@ -8,7 +8,7 @@
 		"lint": "eslint .",
 		"test": "vitest run --passWithNoTests",
 		"test:watch": "vitest",
-		"test:coverage": "vitest run --coverage",
+		"test:coverage": "vitest run --coverage --passWithNoTests",
 		"server": "echo \"🫣 Wrong folder?: 'npm run server' should be run in ./backend directory\" && echo \"💡 Try: 'cd backend && npm run server'\" && exit 1"
 	},
 	"dependencies": {
@@ -24,6 +24,7 @@
 		"@types/react": "^19.1.16",
 		"@types/react-dom": "^19.1.9",
 		"@vitejs/plugin-react": "^5.0.4",
+		"@vitest/coverage-v8": "^4.1.6",
 		"eslint": "^9.36.0",
 		"eslint-plugin-react-hooks": "^5.2.0",
 		"eslint-plugin-react-refresh": "^0.4.22",
