@@ -52,7 +52,7 @@ jobs:
                       ci:
                         - ".github/**"
 
-    # Enforce branch naming convention: feat/, fix/, chore/, or hotfix/
+    # Enforce branch naming convention: feat/, fix/, chore/, hotfix/, or agents/
     validate-branch:
         if: github.event_name == 'pull_request'
         runs-on: ubuntu-latest
@@ -65,9 +65,9 @@ jobs:
             - name: Check branch name
               run: |
                   branch="${{ github.head_ref }}"
-                  if [[ ! "$branch" =~ ^(feat|fix|chore|hotfix)/ ]]; then
+                  if [[ ! "$branch" =~ ^(feat|fix|chore|hotfix|agents)/ ]]; then
                     echo "❌ Branch '$branch' does not follow the naming convention."
-                    echo "   Required prefix: feat/, fix/, chore/, or hotfix/"
+                    echo "   Required prefix: feat/, fix/, chore/, hotfix/, or agents/"
                     exit 1
                   fi
                   echo "✅ Branch '$branch' follows the naming convention."
