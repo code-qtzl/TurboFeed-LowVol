@@ -7,7 +7,7 @@ Creative automation pipeline that generates social ad campaign assets from a bri
 > \
 > Status: **Active Development**
 > \
-> This project is currently "cooking" and evolving rapidly. Expect frequent breaking changes and updates. If you encounter a bug or have a feature request, please open an issue. If you'd like to help build this, forks and pull requests are highly encouraged! Check out how to [CONTRIBUTE](CONTRIBUTING).
+> This project is currently "cooking" and evolving rapidly. Expect frequent breaking changes and updates. If you encounter a bug or have a feature request, please open an issue. If you'd like to help build this, forks and pull requests are highly encouraged! Check out how to [CONTRIBUTE](CONTRIBUTING.md).
 
 ## Quick Start (Docker)
 
