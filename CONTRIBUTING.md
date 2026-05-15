@@ -22,11 +22,11 @@ First off, thank you for considering contributing! Any contributions you make ar
   git clone https://github.com/code-qtzl/TurboFeed-LowVol.git
 
   # Create a feature branch
-  git checkout -b feature/amazing-new-feature
+  git checkout -b feat/amazing-new-feature
 
   # Commit changes
   git commit -m "feat: add some amazing feature"
 
   # Push to the branch
-  git push origin feature/amazing-new-feature
+  git push origin feat/amazing-new-feature
 ```
