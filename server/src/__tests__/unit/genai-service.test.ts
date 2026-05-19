@@ -120,12 +120,11 @@ describe('GenAIService', () => {
 			expect(mockedAxios.post).toHaveBeenCalledWith(
 				'https://api.openai.com/v1/images/generations',
 				{
-					model: 'dall-e-3',
+					model: 'gpt-image-1',
 					prompt: 'Test prompt',
 					n: 1,
 					size: '1024x1024',
-					quality: 'standard',
-					response_format: 'b64_json',
+					quality: 'medium',
 				},
 				expect.objectContaining({
 					headers: expect.objectContaining({
@@ -162,7 +161,7 @@ describe('GenAIService', () => {
 			});
 			const after = new Date();
 
-			expect(result.model).toBe('dall-e-3');
+			expect(result.model).toBe('gpt-image-1');
 			expect(result.generatedAt.getTime()).toBeGreaterThanOrEqual(
 				before.getTime(),
 			);

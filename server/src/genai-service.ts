@@ -21,7 +21,7 @@ export interface GenAIResponse {
 }
 
 /**
- * GenAI_Service integrates with OpenAI DALL-E 3 to generate hero images
+ * GenAI_Service integrates with OpenAI GPT Image to generate hero images
  * when campaign assets are unavailable.
  */
 export class GenAIService {
@@ -43,7 +43,7 @@ export class GenAIService {
 	}
 
 	/**
-	 * Generates an image using OpenAI DALL-E 3 with retry logic and
+	 * Generates an image using OpenAI GPT Image with retry logic and
 	 * exponential backoff.
 	 *
 	 * @param request - The generation request with prompt and dimensions
@@ -60,12 +60,11 @@ export class GenAIService {
 				const response = await axios.post(
 					'https://api.openai.com/v1/images/generations',
 					{
-						model: 'dall-e-3',
+						model: 'gpt-image-1',
 						prompt: request.prompt,
 						n: 1,
 						size: '1024x1024',
-						quality: 'standard',
-						response_format: 'b64_json',
+						quality: 'medium',
 					},
 					{
 						headers: {
@@ -83,7 +82,7 @@ export class GenAIService {
 
 				return {
 					imageBuffer,
-					model: 'dall-e-3',
+					model: 'gpt-image-1',
 					generatedAt: new Date(),
 				};
 			} catch (error) {
