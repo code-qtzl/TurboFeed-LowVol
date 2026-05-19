@@ -158,8 +158,8 @@ export class CreativeGenerator {
 
 		// Retrieve assets for the campaign
 		const assets = await this.assetManager.getAssetsByCampaign(campaignId);
-		// Only use GenAI when no assets are uploaded; uploaded assets always take priority
-		const useGenAI = assets.length === 0;
+		// Use GenAI when explicitly requested or when no assets are available
+		const useGenAI = (request.useGenAI ?? false) || assets.length === 0;
 
 		if (useGenAI && !this.genAIService) {
 			throw new Error(
