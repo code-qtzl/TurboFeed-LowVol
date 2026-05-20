@@ -213,7 +213,7 @@ The system can generate hero images via AI when no uploaded assets are available
 
 **Supported providers:**
 
-- **OpenAI DALL-E 3** — set `GENAI_PROVIDER=openai` and provide `OPENAI_API_KEY`
+- **OpenAI gpt-image-1** — set `GENAI_PROVIDER=openai` and provide `OPENAI_API_KEY`
 
 GenAI is optional. The system works with uploaded assets only. If GenAI fails, the pipeline continues with available assets and reports errors in the response.
 
