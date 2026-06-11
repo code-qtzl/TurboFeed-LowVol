@@ -114,7 +114,7 @@ Client runs on **http://localhost:5173**
 
 ```json
 {
-	"products": ["Mommas House"],
+	"products": "Mommas House",
 	"targetRegion": "North America",
 	"targetAudience": "Mothers",
 	"campaignMessage": "Luxury Living"
