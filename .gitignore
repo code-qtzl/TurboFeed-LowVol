@@ -7,3 +7,5 @@ tasks.md
 *.kiro
 *.claude
 examples/
+.github/skills/coding-standards/
+.github/skills/do-work/
