@@ -7,3 +7,6 @@ tasks.md
 *.kiro
 *.claude
 examples/
+
+**/coding-standards
+**/do-work
