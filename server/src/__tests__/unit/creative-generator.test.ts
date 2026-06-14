@@ -194,13 +194,11 @@ describe('CreativeGenerator', () => {
 
 			const mockGenAIService = {
 				constructPrompt: jest.fn().mockReturnValue('mock prompt'),
-				generateImage: jest
-					.fn()
-					.mockResolvedValue({
-						imageBuffer: genAIBuffer,
-						model: 'dall-e-3',
-						generatedAt: new Date(),
-					}),
+				generateImage: jest.fn().mockResolvedValue({
+					imageBuffer: genAIBuffer,
+					model: 'gpt-image-2',
+					generatedAt: new Date(),
+				}),
 			} as unknown as GenAIService;
 
 			const generatorWithGenAI = new CreativeGenerator(
