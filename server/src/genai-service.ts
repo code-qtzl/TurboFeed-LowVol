@@ -36,9 +36,10 @@ export class GenAIService {
 		return (
 			`Professional product photography of ${product} ` +
 			`for ${brief.targetAudience} in ${brief.targetRegion}. ` +
-			`${brief.campaignMessage}. ` +
+			`Convey this mood visually without words: ${brief.campaignMessage}. ` +
 			`High quality, commercial use, clean background, ` +
-			`well-lit, studio lighting, 4k resolution.`
+			`well-lit, studio lighting, 4k resolution. ` +
+			`Do not render any text, letters, captions, logos, signage, or watermarks in the image.`
 		);
 	}
 

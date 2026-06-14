@@ -194,9 +194,11 @@ describe('CreativeGenerator', () => {
 
 			const mockGenAIService = {
 				constructPrompt: jest.fn().mockReturnValue('mock prompt'),
-				generateImage: jest
-					.fn()
-					.mockResolvedValue({ imageBuffer: genAIBuffer, model: 'dall-e-3', generatedAt: new Date() }),
+				generateImage: jest.fn().mockResolvedValue({
+					imageBuffer: genAIBuffer,
+					model: 'gpt-image-2',
+					generatedAt: new Date(),
+				}),
 			} as unknown as GenAIService;
 
 			const generatorWithGenAI = new CreativeGenerator(
@@ -255,7 +257,6 @@ describe('CreativeGenerator', () => {
 			const result = await generator.processImage(
 				testImageBuffer,
 				ASPECT_RATIOS[0], // 1:1
-				'Test message',
 			);
 
 			const metadata = await sharp(result).metadata();
@@ -267,7 +268,6 @@ describe('CreativeGenerator', () => {
 			const result = await generator.processImage(
 				testImageBuffer,
 				ASPECT_RATIOS[1], // 9:16
-				'Test message',
 			);
 
 			const metadata = await sharp(result).metadata();
@@ -279,7 +279,6 @@ describe('CreativeGenerator', () => {
 			const result = await generator.processImage(
 				testImageBuffer,
 				ASPECT_RATIOS[2], // 16:9
-				'Test message',
 			);
 
 			const metadata = await sharp(result).metadata();
@@ -287,22 +286,10 @@ describe('CreativeGenerator', () => {
 			expect(metadata.height).toBe(1080);
 		});
 
-		it('should handle empty text', async () => {
+		it('should process image with no text overlay dependency', async () => {
 			const result = await generator.processImage(
 				testImageBuffer,
 				ASPECT_RATIOS[0],
-				'',
-			);
-
-			expect(result).toBeInstanceOf(Buffer);
-			expect(result.length).toBeGreaterThan(0);
-		});
-
-		it('should handle special characters in text', async () => {
-			const result = await generator.processImage(
-				testImageBuffer,
-				ASPECT_RATIOS[0],
-				'Test & <special> "chars"',
 			);
 
 			expect(result).toBeInstanceOf(Buffer);

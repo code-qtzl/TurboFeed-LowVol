@@ -3,7 +3,7 @@ import path from 'path';
 import { CampaignManager } from './campaign-manager';
 import { AssetManager } from './asset-manager';
 import { GenAIService } from './genai-service';
-import { resizeImage, overlayText, ASPECT_RATIOS } from './image-processor';
+import { resizeImage, ASPECT_RATIOS } from './image-processor';
 import { CampaignOutput } from './types';
 import { config } from './config';
 
@@ -30,8 +30,7 @@ export interface GenerationResult {
 
 /**
  * Creative_Generator orchestrates the full creative generation pipeline.
- * For each product × aspect ratio combination, it resizes the source image
- * and overlays the campaign message text.
+ * For each product × aspect ratio combination, it resizes the source image.
  */
 export class CreativeGenerator {
 	private campaignManager: CampaignManager;
@@ -173,7 +172,7 @@ export class CreativeGenerator {
 			'generating',
 		);
 
-		const { hero, campaignMessage } = campaign.brief;
+		const { hero } = campaign.brief;
 
 		// When using GenAI, generate a single source image for the hero
 		let genAIBuffer: Buffer | undefined;
@@ -206,7 +205,6 @@ export class CreativeGenerator {
 					const processedBuffer = await this.processImage(
 						sourceBuffer,
 						aspectRatio,
-						campaignMessage,
 					);
 
 					const output: OutputWithBuffer = {
@@ -264,32 +262,16 @@ export class CreativeGenerator {
 	}
 
 	/**
-	 * Processes a single image: resizes to the target aspect ratio
-	 * and overlays the campaign message text.
+	 * Processes a single image by resizing to the target aspect ratio.
 	 *
 	 * @param imageBuffer - Source image buffer
 	 * @param aspectRatio - Target aspect ratio configuration
-	 * @param text - Campaign message text to overlay
 	 * @returns Processed image buffer
 	 */
 	async processImage(
 		imageBuffer: Buffer,
 		aspectRatio: { ratio: string; width: number; height: number },
-		text: string,
 	): Promise<Buffer> {
-		// Step 1: Resize to target dimensions
-		const resized = await resizeImage(
-			imageBuffer,
-			aspectRatio.width,
-			aspectRatio.height,
-		);
-
-		// Step 2: Overlay campaign message text
-		const withText = await overlayText(resized, text, {
-			width: aspectRatio.width,
-			height: aspectRatio.height,
-		});
-
-		return withText;
+		return resizeImage(imageBuffer, aspectRatio.width, aspectRatio.height);
 	}
 }
