@@ -11,7 +11,7 @@ First off, thank you for considering contributing! Any contributions you make ar
 3. **Pull Requests (Required Flow):**
     - Open your PR **to `main`**.
     - CI is enforced on PRs to `main` and on pushes to `main`.
-    - Branch naming and PR title checks are enforced by [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+    - Branch naming and PR title checks are enforced by [`.github/workflows/ci.yml`](https://github.com/code-qtzl/TurboFeed-LowVol/blob/main/.github/workflows/ci.yml).
 
 ## Branch Naming Convention (Required)
 
