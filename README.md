@@ -9,6 +9,16 @@ Creative automation pipeline that generates social ad campaign assets from a bri
 > \
 > This project is currently "cooking" and evolving rapidly. Expect frequent breaking changes and updates. If you encounter a bug or have a feature request, please open an issue. If you'd like to help build this, forks and pull requests are highly encouraged! Check out how to [CONTRIBUTE](.github/CONTRIBUTING.md).
 
+<div align="center">
+<img src="./assets/ScreenShot_Studio.png" alt="Studio" width="600">
+</div>
+<div align="center">
+<img src="./assets/CleanShot_Specs.png" alt="Specs" width="600">
+</div>
+<div align="center">
+<img src="./assets/ScreenShot_Generate.png" alt="Generate Modal" width="600">
+</div>
+
 ## Quick Start (Docker)
 
 ### Prerequisites
@@ -114,10 +124,10 @@ Client runs on **http://localhost:5173**
 
 ```json
 {
-	"products": "Mommas House",
+	"products": "Product A",
 	"targetRegion": "North America",
-	"targetAudience": "Mothers",
-	"campaignMessage": "Luxury Living"
+	"targetAudience": "Fitness enthusiasts aged 18-45",
+	"campaignMessage": "Push your limits"
 }
 ```
 
