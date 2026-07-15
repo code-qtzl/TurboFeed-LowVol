@@ -7,14 +7,24 @@ Creative automation pipeline that generates social ad campaign assets from a bri
 > \
 > Status: **Active Development**
 > \
-> This project is currently "cooking" and evolving rapidly. Expect frequent breaking changes and updates. If you encounter a bug or have a feature request, please open an issue. If you'd like to help build this, forks and pull requests are highly encouraged! Check out how to [CONTRIBUTE](CONTRIBUTING.md).
+> This project is currently "cooking" and evolving rapidly. Expect frequent breaking changes and updates. If you encounter a bug or have a feature request, please open an issue. If you'd like to help build this, forks and pull requests are highly encouraged! Check out how to [CONTRIBUTE](.github/CONTRIBUTING.md).
+
+<div align="center">
+<img src="./assets/ScreenShot_Studio.png" alt="Studio" width="600">
+</div>
+<div align="center">
+<img src="./assets/CleanShot_Specs.png" alt="Specs" width="600">
+</div>
+<div align="center">
+<img src="./assets/ScreenShot_Generate.png" alt="Generate Modal" width="600">
+</div>
 
 ## Quick Start (Docker)
 
 ### Prerequisites
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- An [OpenAI API key](https://platform.openai.com/api-keys) — used for AI image generation (the fallback when no product images are uploaded). **Note:** OpenAI has deprecated DALL-E 3 as of May 12, 2026. If your key no longer has access to DALL-E 3, upload your own product images in Step 2 to skip AI generation.
+- An [OpenAI API key](https://platform.openai.com/api-keys) — used for AI image generation (the fallback when no product images are uploaded).
 - A [Fal AI API key](https://fal.ai/dashboard/keys) — needed for video generation and image relighting features.
 
 ### Run
@@ -81,7 +91,7 @@ Client runs on **http://localhost:5173**
 ## How It Works
 
 1. **Create a campaign** — Submit a brief with products, target region, audience, and message
-2. **Upload assets** — Add product images (or skip to let DALL-E 3 generate them)
+2. **Upload assets** — Add product images (or skip to let `gpt-image-1` generate them)
 3. **Generate creatives** — The pipeline resizes images to 1:1, 9:16, and 16:9 and overlays your campaign message
 4. **Review outputs** — Browse generated creatives organized by product and aspect ratio
 
@@ -114,10 +124,10 @@ Client runs on **http://localhost:5173**
 
 ```json
 {
-	"products": ["Mommas House"],
+	"products": "Product A",
 	"targetRegion": "North America",
-	"targetAudience": "Mothers",
-	"campaignMessage": "Luxury Living"
+	"targetAudience": "Fitness enthusiasts aged 18-45",
+	"campaignMessage": "Push your limits"
 }
 ```
 
@@ -131,7 +141,7 @@ cd client && npm test        # Client component tests
 ## Key Design Decisions
 
 - **In-memory storage** — Campaigns and assets live in memory (no database required for the PoC)
-- **GenAI fallback** — If no images are uploaded, DALL-E 3 generates product photography automatically
+- **GenAI fallback** — If no images are uploaded, OpenAI `gpt-image-1` generates product photography automatically
 - **Sharp for image processing** — Resizing and text overlay handled server-side via Sharp
 - **Organized outputs** — Each campaign gets a folder: `outputs/{id}/{product}/{ratio}/creative.jpg`
 

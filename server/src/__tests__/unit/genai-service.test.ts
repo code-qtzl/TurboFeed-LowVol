@@ -61,7 +61,9 @@ describe('GenAIService', () => {
 			};
 
 			const prompt = service.constructPrompt(brief, 'Product A');
-			expect(prompt).toContain('Unleash your potential');
+			expect(prompt).toContain(
+				'Convey this mood visually without words: Unleash your potential.',
+			);
 		});
 
 		it('should follow the expected prompt template format', () => {
@@ -76,9 +78,24 @@ describe('GenAIService', () => {
 			expect(prompt).toBe(
 				'Professional product photography of Sneakers ' +
 					'for Athletes in North America. ' +
-					'Run faster. ' +
+					'Convey this mood visually without words: Run faster. ' +
 					'High quality, commercial use, clean background, ' +
-					'well-lit, studio lighting, 4k resolution.',
+					'well-lit, studio lighting, 4k resolution. ' +
+					'Do not render any text, letters, captions, logos, signage, or watermarks in the image.',
+			);
+		});
+
+		it('should explicitly prohibit generated in-frame text', () => {
+			const brief: CampaignBrief = {
+				hero: 'Product A',
+				targetRegion: 'Europe',
+				targetAudience: 'Adults',
+				campaignMessage: 'Unleash your potential',
+			};
+
+			const prompt = service.constructPrompt(brief, 'Product A');
+			expect(prompt).toContain(
+				'Do not render any text, letters, captions, logos, signage, or watermarks in the image.',
 			);
 		});
 
@@ -120,12 +137,11 @@ describe('GenAIService', () => {
 			expect(mockedAxios.post).toHaveBeenCalledWith(
 				'https://api.openai.com/v1/images/generations',
 				{
-					model: 'dall-e-3',
+					model: 'gpt-image-1',
 					prompt: 'Test prompt',
 					n: 1,
 					size: '1024x1024',
-					quality: 'standard',
-					response_format: 'b64_json',
+					quality: 'medium',
 				},
 				expect.objectContaining({
 					headers: expect.objectContaining({
@@ -162,7 +178,7 @@ describe('GenAIService', () => {
 			});
 			const after = new Date();
 
-			expect(result.model).toBe('dall-e-3');
+			expect(result.model).toBe('gpt-image-1');
 			expect(result.generatedAt.getTime()).toBeGreaterThanOrEqual(
 				before.getTime(),
 			);

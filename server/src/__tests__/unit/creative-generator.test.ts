@@ -2,6 +2,7 @@ import sharp from 'sharp';
 import { CampaignManager } from '../../campaign-manager';
 import { AssetManager } from '../../asset-manager';
 import { CreativeGenerator, OutputWithBuffer } from '../../creative-generator';
+import { GenAIService } from '../../genai-service';
 import { ASPECT_RATIOS } from '../../image-processor';
 import { Campaign, CampaignBrief, Asset } from '../../types';
 
@@ -179,6 +180,65 @@ describe('CreativeGenerator', () => {
 			expect(result.outputs).toHaveLength(ASPECT_RATIOS.length - 1);
 		});
 
+		it('should use GenAI when useGenAI is true, even when assets exist', async () => {
+			const genAIBuffer = await sharp({
+				create: {
+					width: 1024,
+					height: 1024,
+					channels: 3,
+					background: { r: 0, g: 0, b: 255 },
+				},
+			})
+				.jpeg()
+				.toBuffer();
+
+			const mockGenAIService = {
+				constructPrompt: jest.fn().mockReturnValue('mock prompt'),
+				generateImage: jest.fn().mockResolvedValue({
+					imageBuffer: genAIBuffer,
+					model: 'gpt-image-2',
+					generatedAt: new Date(),
+				}),
+			} as unknown as GenAIService;
+
+			const generatorWithGenAI = new CreativeGenerator(
+				campaignManager,
+				assetManager,
+				mockGenAIService,
+			);
+
+			const { campaign } = await setupCampaignWithAsset();
+			await generatorWithGenAI.generate({
+				campaignId: campaign.id,
+				useGenAI: true,
+			});
+
+			expect(mockGenAIService.generateImage).toHaveBeenCalledTimes(1);
+			expect(mockGenAIService.constructPrompt).toHaveBeenCalledTimes(1);
+		});
+
+		it('should use uploaded asset when useGenAI is false', async () => {
+			const mockGenAIService = {
+				constructPrompt: jest.fn(),
+				generateImage: jest.fn(),
+			} as unknown as GenAIService;
+
+			const generatorWithGenAI = new CreativeGenerator(
+				campaignManager,
+				assetManager,
+				mockGenAIService,
+			);
+
+			const { campaign } = await setupCampaignWithAsset();
+			const result = await generatorWithGenAI.generate({
+				campaignId: campaign.id,
+				useGenAI: false,
+			});
+
+			expect(mockGenAIService.generateImage).not.toHaveBeenCalled();
+			expect(result.outputs).toHaveLength(ASPECT_RATIOS.length);
+		});
+
 		it('should attach processed buffer to each output', async () => {
 			const { campaign } = await setupCampaignWithAsset();
 			const result = await generator.generate({
@@ -197,7 +257,6 @@ describe('CreativeGenerator', () => {
 			const result = await generator.processImage(
 				testImageBuffer,
 				ASPECT_RATIOS[0], // 1:1
-				'Test message',
 			);
 
 			const metadata = await sharp(result).metadata();
@@ -209,7 +268,6 @@ describe('CreativeGenerator', () => {
 			const result = await generator.processImage(
 				testImageBuffer,
 				ASPECT_RATIOS[1], // 9:16
-				'Test message',
 			);
 
 			const metadata = await sharp(result).metadata();
@@ -221,7 +279,6 @@ describe('CreativeGenerator', () => {
 			const result = await generator.processImage(
 				testImageBuffer,
 				ASPECT_RATIOS[2], // 16:9
-				'Test message',
 			);
 
 			const metadata = await sharp(result).metadata();
@@ -229,22 +286,10 @@ describe('CreativeGenerator', () => {
 			expect(metadata.height).toBe(1080);
 		});
 
-		it('should handle empty text', async () => {
+		it('should process image with no text overlay dependency', async () => {
 			const result = await generator.processImage(
 				testImageBuffer,
 				ASPECT_RATIOS[0],
-				'',
-			);
-
-			expect(result).toBeInstanceOf(Buffer);
-			expect(result.length).toBeGreaterThan(0);
-		});
-
-		it('should handle special characters in text', async () => {
-			const result = await generator.processImage(
-				testImageBuffer,
-				ASPECT_RATIOS[0],
-				'Test & <special> "chars"',
 			);
 
 			expect(result).toBeInstanceOf(Buffer);

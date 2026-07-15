@@ -6,3 +6,9 @@ tasks.md
 */outputs
 *.kiro
 *.claude
+examples/
+.github/skills/coding-standards/
+.github/skills/do-work/
+
+**/coding-standards
+**/do-work
