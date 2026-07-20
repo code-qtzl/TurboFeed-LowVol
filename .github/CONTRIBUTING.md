@@ -4,7 +4,7 @@ First off, thank you for considering contributing! Any contributions you make ar
 
 ## How to Contribute
 
-1. **Report Bugs:** Use the GitHub Issues tab to report any bugs. Please include steps to reproduce the error.
+1. **Report Bugs:** Use the GitHub [Issues](https://github.com/code-qtzl/TurboFeed-LowVol/issues) tab to report any bugs. Please include steps to reproduce the error.
 
 2. **Feature Requests:** Open an issue to discuss new ideas before diving into the code.
 
@@ -87,6 +87,6 @@ git push origin feat/amazing-new-feature
 
 Before requesting review:
 
-- Add or update tests when behavior changes.
+- ~~Add or update tests when behavior changes.~~ Working on this.
 - Keep control flow and style consistent with the existing codebase.
 - Make sure your PR title and branch name follow the conventions above.
