@@ -21,6 +21,7 @@ Your branch name must start with one of these prefixes:
 - `fix/`
 - `chore/`
 - `hotfix/`
+- `sec/` (security changes)
 
 Examples:
 
