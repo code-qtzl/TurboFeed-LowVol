@@ -52,6 +52,30 @@ jobs:
                       ci:
                         - ".github/**"
 
+    # Fail when .github/workflows/actions.lock is out of sync with the
+    # workflows or a locked pin no longer verifies upstream
+    lockfile:
+        runs-on: ubuntu-latest
+        env:
+            GH_TOKEN: ${{ github.token }}
+        steps:
+            - name: Harden Runner
+              uses: step-security/harden-runner@v2.17.0
+              with:
+                  egress-policy: audit
+
+            - name: Checkout
+              uses: actions/checkout@v4.2.2
+              with:
+                  fetch-depth: 1
+                  persist-credentials: false
+
+            - name: Install gh-actions-lock
+              run: gh extension install github/gh-actions-lock --pin v0.4.1
+
+            - name: Verify actions lockfile
+              run: gh actions-lock --verify
+
     # Enforce branch naming convention: feat/, fix/, chore/, hotfix/, sec/, agents/, or docs/
     validate-branch:
         if: github.event_name == 'pull_request'
