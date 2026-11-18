@@ -21,13 +21,14 @@ Your branch name must start with one of these prefixes:
 - `fix/`
 - `chore/`
 - `hotfix/`
-- `sec/` (security changes)
+- `sec/`
 
 Examples:
 
 - `feat/new-campaign-wizard`
 - `fix/review-dashboard-null-state`
 - `chore/update-eslint-config`
+- `sec/sensible-security-improvement`
 
 If your branch does not match one of these prefixes, CI will fail.
 
